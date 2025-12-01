@@ -37,7 +37,6 @@ const EventoCreatePage = () => {
       ...prev,
       [name]: value
     }));
-    // Remove erro do campo quando usuário começar a digitar
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -48,14 +47,12 @@ const EventoCreatePage = () => {
 
   const formatDateForInput = (dateString) => {
     if (!dateString) return '';
-    // Converte de "dd/MM/yyyy HH:mm" para "yyyy-MM-ddTHH:mm"
     const [date, time] = dateString.split(' ');
     const [day, month, year] = date.split('/');
     return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}T${time}`;
   };
 
   const formatDateForBackend = (dateString) => {
-    // Converte de "yyyy-MM-ddTHH:mm" para "dd/MM/yyyy HH:mm"
     const [date, time] = dateString.split('T');
     const [year, month, day] = date.split('-');
     return `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year} ${time}`;
@@ -95,12 +92,17 @@ const EventoCreatePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-100 via-orange-50 to-orange-200 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-purple-800 to-purple-950 relative overflow-hidden">
       
-      {/* Efeitos de iluminação de fundo */}
-      <div className="absolute top-0 left-0 w-72 h-72 bg-orange-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
-      <div className="absolute top-0 right-0 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-      <div className="absolute bottom-0 left-1/2 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+      {/* Efeitos de fundo */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-purple-800 to-purple-950"></div>
+      <div className="absolute -top-40 -left-40 w-[800px] h-[800px] bg-gradient-to-br from-purple-700/40 via-purple-600/30 to-transparent rounded-full blur-3xl"></div>
+      <div className="absolute -top-20 -right-40 w-[700px] h-[700px] bg-gradient-to-bl from-purple-600/50 via-purple-500/40 to-transparent rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-purple-700/30 via-purple-600/20 to-transparent rounded-full blur-3xl"></div>
+      <div className="absolute bottom-40 right-0 w-[500px] h-[500px] bg-gradient-to-tl from-purple-800/40 via-purple-700/30 to-transparent rounded-full blur-3xl"></div>
+      <div className="absolute top-32 left-20 w-8 h-8 bg-purple-700/40 rounded-full blur-xl"></div>
+      <div className="absolute top-64 right-32 w-12 h-12 bg-purple-600/50 rounded-full blur-xl"></div>
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
 
       <div className="relative z-10 container mx-auto px-4 py-8 mt-16">
         {/* Header */}
@@ -108,27 +110,27 @@ const EventoCreatePage = () => {
           <div className="flex items-center gap-4 mb-8">
             <button
               onClick={() => router.back()}
-              className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors duration-200"
+              className="flex items-center gap-2 text-purple-200 hover:text-white transition-colors duration-200"
             >
               <ArrowLeft className="w-5 h-5" />
               Voltar
             </button>
-            <h1 className="text-4xl font-bold text-gray-800">Criar Novo Evento</h1>
+            <h1 className="text-4xl font-bold text-white">Criar Novo Evento</h1>
           </div>
 
           {/* Formulário */}
-          <div className="bg-white rounded-3xl shadow-2xl p-8">
+          <div className="bg-white/10 backdrop-blur-md rounded-3xl shadow-2xl p-8 border border-white/20">
             {errors.general && (
-              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl flex items-center gap-3">
-                <AlertCircle className="w-5 h-5 text-red-500" />
-                <p className="text-red-700">{errors.general}</p>
+              <div className="mb-6 p-4 bg-red-500/20 backdrop-blur-sm border border-red-400/30 rounded-xl flex items-center gap-3">
+                <AlertCircle className="w-5 h-5 text-red-300" />
+                <p className="text-red-200">{errors.general}</p>
               </div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Nome do Evento */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-purple-200 mb-2">
                   Nome do Evento *
                 </label>
                 <input
@@ -137,16 +139,16 @@ const EventoCreatePage = () => {
                   value={formData.nome}
                   onChange={handleChange}
                   maxLength={150}
-                  className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 ${
-                    errors.nome ? 'border-red-500' : 'border-gray-300'
+                  className={`w-full px-4 py-3 bg-white/5 backdrop-blur-sm border rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200 text-white placeholder-purple-300/50 ${
+                    errors.nome ? 'border-red-400/50' : 'border-white/20'
                   }`}
                   placeholder="Digite o nome do evento"
                 />
                 <div className="flex justify-between mt-1">
                   {errors.nome && (
-                    <span className="text-red-500 text-sm">{errors.nome}</span>
+                    <span className="text-red-300 text-sm">{errors.nome}</span>
                   )}
-                  <span className="text-gray-500 text-sm ml-auto">
+                  <span className="text-purple-300 text-sm ml-auto">
                     {formData.nome.length}/150
                   </span>
                 </div>
@@ -154,7 +156,7 @@ const EventoCreatePage = () => {
 
               {/* Descrição */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-purple-200 mb-2">
                   Descrição *
                 </label>
                 <textarea
@@ -163,16 +165,16 @@ const EventoCreatePage = () => {
                   onChange={handleChange}
                   maxLength={500}
                   rows={4}
-                  className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 resize-none ${
-                    errors.descricao ? 'border-red-500' : 'border-gray-300'
+                  className={`w-full px-4 py-3 bg-white/5 backdrop-blur-sm border rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200 text-white placeholder-purple-300/50 resize-none ${
+                    errors.descricao ? 'border-red-400/50' : 'border-white/20'
                   }`}
                   placeholder="Descreva o evento..."
                 />
                 <div className="flex justify-between mt-1">
                   {errors.descricao && (
-                    <span className="text-red-500 text-sm">{errors.descricao}</span>
+                    <span className="text-red-300 text-sm">{errors.descricao}</span>
                   )}
-                  <span className="text-gray-500 text-sm ml-auto">
+                  <span className="text-purple-300 text-sm ml-auto">
                     {formData.descricao.length}/500
                   </span>
                 </div>
@@ -182,33 +184,33 @@ const EventoCreatePage = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Tipo do Evento */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-sm font-semibold text-purple-200 mb-2">
                     Tipo do Evento *
                   </label>
                   <select
                     name="tipo"
                     value={formData.tipo}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 ${
-                      errors.tipo ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 bg-white/5 backdrop-blur-sm border rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200 text-white ${
+                      errors.tipo ? 'border-red-400/50' : 'border-white/20'
                     }`}
                   >
-                    <option value="">Selecione um tipo</option>
+                    <option value="" className="text-purple-300">Selecione um tipo</option>
                     {tiposEvento.map((tipo) => (
-                      <option key={tipo.value} value={tipo.value}>
+                      <option key={tipo.value} value={tipo.value} className="bg-purple-900">
                         {tipo.label}
                       </option>
                     ))}
                   </select>
                   {errors.tipo && (
-                    <span className="text-red-500 text-sm mt-1">{errors.tipo}</span>
+                    <span className="text-red-300 text-sm mt-1">{errors.tipo}</span>
                   )}
                 </div>
 
                 {/* Local */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    <MapPin className="w-4 h-4 inline mr-1" />
+                  <label className="block text-sm font-semibold text-purple-200 mb-2">
+                    <MapPin className="w-4 h-4 inline mr-1 text-purple-300" />
                     Local *
                   </label>
                   <input
@@ -217,16 +219,16 @@ const EventoCreatePage = () => {
                     value={formData.local}
                     onChange={handleChange}
                     maxLength={150}
-                    className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 ${
-                      errors.local ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 bg-white/5 backdrop-blur-sm border rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200 text-white placeholder-purple-300/50 ${
+                      errors.local ? 'border-red-400/50' : 'border-white/20'
                     }`}
                     placeholder="Onde o evento acontecerá?"
                   />
                   <div className="flex justify-between mt-1">
                     {errors.local && (
-                      <span className="text-red-500 text-sm">{errors.local}</span>
+                      <span className="text-red-300 text-sm">{errors.local}</span>
                     )}
-                    <span className="text-gray-500 text-sm ml-auto">
+                    <span className="text-purple-300 text-sm ml-auto">
                       {formData.local.length}/150
                     </span>
                   </div>
@@ -237,8 +239,8 @@ const EventoCreatePage = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Data de Início */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    <Calendar className="w-4 h-4 inline mr-1" />
+                  <label className="block text-sm font-semibold text-purple-200 mb-2">
+                    <Calendar className="w-4 h-4 inline mr-1 text-purple-300" />
                     Data e Hora de Início *
                   </label>
                   <input
@@ -246,19 +248,19 @@ const EventoCreatePage = () => {
                     name="dataInicio"
                     value={formData.dataInicio}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 ${
-                      errors.dataInicio ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 bg-white/5 backdrop-blur-sm border rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200 text-white ${
+                      errors.dataInicio ? 'border-red-400/50' : 'border-white/20'
                     }`}
                   />
                   {errors.dataInicio && (
-                    <span className="text-red-500 text-sm mt-1">{errors.dataInicio}</span>
+                    <span className="text-red-300 text-sm mt-1">{errors.dataInicio}</span>
                   )}
                 </div>
 
                 {/* Data Final */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    <Calendar className="w-4 h-4 inline mr-1" />
+                  <label className="block text-sm font-semibold text-purple-200 mb-2">
+                    <Calendar className="w-4 h-4 inline mr-1 text-purple-300" />
                     Data e Hora de Término *
                   </label>
                   <input
@@ -266,12 +268,12 @@ const EventoCreatePage = () => {
                     name="dataFinal"
                     value={formData.dataFinal}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 ${
-                      errors.dataFinal ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-4 py-3 bg-white/5 backdrop-blur-sm border rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200 text-white ${
+                      errors.dataFinal ? 'border-red-400/50' : 'border-white/20'
                     }`}
                   />
                   {errors.dataFinal && (
-                    <span className="text-red-500 text-sm mt-1">{errors.dataFinal}</span>
+                    <span className="text-red-300 text-sm mt-1">{errors.dataFinal}</span>
                   )}
                 </div>
               </div>
@@ -280,8 +282,8 @@ const EventoCreatePage = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Link do Evento */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    <Link2 className="w-4 h-4 inline mr-1" />
+                  <label className="block text-sm font-semibold text-purple-200 mb-2">
+                    <Link2 className="w-4 h-4 inline mr-1 text-purple-300" />
                     Link do Evento
                   </label>
                   <input
@@ -289,15 +291,15 @@ const EventoCreatePage = () => {
                     name="linkEvento"
                     value={formData.linkEvento}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
+                    className="w-full px-4 py-3 bg-white/5 backdrop-blur-sm border border-white/20 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200 text-white placeholder-purple-300/50"
                     placeholder="https://..."
                   />
                 </div>
 
                 {/* Link da Imagem */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    <Image className="w-4 h-4 inline mr-1" />
+                  <label className="block text-sm font-semibold text-purple-200 mb-2">
+                    <Image className="w-4 h-4 inline mr-1 text-purple-300" />
                     Link da Imagem
                   </label>
                   <input
@@ -305,7 +307,7 @@ const EventoCreatePage = () => {
                     name="linkImagem"
                     value={formData.linkImagem}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200"
+                    className="w-full px-4 py-3 bg-white/5 backdrop-blur-sm border border-white/20 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200 text-white placeholder-purple-300/50"
                     placeholder="https://..."
                   />
                 </div>
@@ -316,7 +318,7 @@ const EventoCreatePage = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex items-center gap-2 bg-gradient-to-r from-orange-500 to-pink-500 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  className="flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 rounded-xl font-semibold shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none hover:from-purple-600 hover:to-pink-600"
                 >
                   {loading ? (
                     <>
@@ -335,24 +337,6 @@ const EventoCreatePage = () => {
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes blob {
-          0% { transform: translate(0px, 0px) scale(1); }
-          33% { transform: translate(30px, -50px) scale(1.1); }
-          66% { transform: translate(-20px, 20px) scale(0.9); }
-          100% { transform: translate(0px, 0px) scale(1); }
-        }
-        .animate-blob {
-          animation: blob 7s infinite;
-        }
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        .animation-delay-4000 {
-          animation-delay: 4s;
-        }
-      `}</style>
     </div>
   );
 };
