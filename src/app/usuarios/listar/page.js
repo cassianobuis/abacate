@@ -539,14 +539,14 @@ const UsuariosPage = () => {
                   name="tipo"
                   value={editForm.tipo}
                   onChange={handleEditChange}
-                  className={`w-full px-4 py-3 bg-white/10 backdrop-blur-sm border rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200 text-white ${
+                  className={`w-full px-4 py-3 bg-white/90 backdrop-blur-sm border rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200 text-black ${
                     editErrors.tipo ? 'border-red-400/50' : 'border-white/20'
                   }`}
                 >
-                  <option value="">Selecione um tipo</option>
-                  <option value="ADMINISTRADOR">Administrador</option>
-                  <option value="ORGANIZADOR">Organizador</option>
-                  <option value="USUARIO">Usuário</option>
+                  <option value="" className="text-gray-500">Selecione um tipo</option>
+                  <option value="ADMINISTRADOR" className="text-black">Administrador</option>
+                  <option value="ORGANIZADOR" className="text-black">Organizador</option>
+                  <option value="USUARIO" className="text-black">Usuário</option>
                 </select>
                 {editErrors.tipo && (
                   <span className="text-red-300 text-sm mt-1">{editErrors.tipo}</span>
